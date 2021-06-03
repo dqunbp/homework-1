@@ -8,11 +8,9 @@ import {
 } from "@chakra-ui/react";
 import CreatableSelect from "react-select/creatable";
 
-const options = [
-  { value: "chocolate", label: "Chocolate" },
-  { value: "strawberry", label: "Strawberry" },
-  { value: "vanilla", label: "Vanilla" },
-];
+import keywords from "../public/keywords.json";
+
+const options = keywords.map((keyword) => ({ label: keyword, value: keyword }));
 
 const UserForm: React.FC = () => {
   const handleChange = (newValue: any, actionMeta: any) => {

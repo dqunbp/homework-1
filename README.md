@@ -152,6 +152,10 @@ The user has the ability to customize the text of the main title and subtitle, f
 }
 ```
 
+### Customizing list of keywords
+
+To change the list of suggested keywords, edit the file `public/keywords.json`
+
 #### Customizing `logo` and `favicon`
 
 In order to use a custom logo or favicon, the user can save it as a file in the `png` format along the paths`public/logo.png` and `public/favicon.png`
