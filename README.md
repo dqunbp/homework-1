@@ -1,34 +1,164 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Homework#1
 
-## Getting Started
+## Requirements
 
-First, run the development server:
+We need to develop a SPA that allows us to collect customer information and offer free domain names for registration
 
-```bash
-npm run dev
-# or
-yarn dev
+Key features:
+
+- A form for collecting input from the user, including their name and keywords related to their business
+- A list of adjectives for combining with business keywords
+- Make an API request to domainsdb.info to check availability
+
+## Principles
+
+When developing a solution, we will be guided by the following principles
+
+- **Development speed** - we want to create an application as soon as possible, for this we will use ready-made solutions as much as possible
+- **Simplicity** - The solution should be easy to use, but at the same time customizable if necessary, for example, styles, texts
+- **Compatibility** - the web application should be convenient to use both in the desktop and in the mobile version
+- **Usability** - in the process of interacting with the application, the user has a clear idea of ​​what is expected of him at every step
+
+## Mockup plan
+
+To achieve our goal 🎯 consider the main ideas for the implementation of the task:
+
+- The web application is a single page form with a set of fields and a step-by-step progress indicator
+- By filling in the required form fields, the user will be able to choose any of the offered free domain names
+- When the form is completely filled, the Submit button becomes active to save the result
+
+For clarity, let's create layouts of the web application drawn in `draw.io`
+
+### Home screen
+
+We have the following items
+
+- Title (optional)
+- Subtitle (optional)
+- Username - text field
+- Key business words - multi-input with the ability to select existing keywords or add your own
+- Company name - text field
+- Step by step description of progress
+- Submit button
+- Company logo (optional)
+
+![Home screen](/layouts/main.png?raw=true "Home screen")
+
+### Filling out the form
+
+As the form fills out, the user will see how his progress is changing and what steps are still left to achieve the goal
+
+![Filling out the form](/layouts/filling-the-form.png?raw=true "Filling out the form")
+
+### Choosing a domain name
+
+When the user fills in the field with the name of the company, the application will offer a list of available names, at this step the user can select a name or click on the "show more" button to see other options, or enter the name manually
+
+![Choosing a domain name](/layouts/choosing-domain.png?raw=true "Choosing a domain name")
+
+### Submitting
+
+When the domain name is selected, the form is considered fully completed and the user can submit it
+
+![Submitting](/layouts/submitting.png?raw=true "Submitting")
+
+## Development plan
+
+### Defining the stack
+
+First of all, let's describe the stack:
+
+- **XState** - will help to effectively manage the state of the application
+- **ChakraUI** - a set of ui components for React, will allow you to use ready-made components for buttons and form fields
+- **Next.js** - will allow us to collect our page in statics, which will have a positive effect on the loading time of the application
+- **Typescript** - strong typing will help to minimize the number of possible errors in the development process
+
+### Extracting components
+
+Let's split the application into logical components with the following structure
+
+- App
+  - UserForm
+  - DomainForm
+  - Progress
+
+![Components](/layouts/components.png?raw=true "Components")
+
+## State management
+
+State management plays a key role in the operation of our application
+
+Our application state can be conditionally divided into `global state` and `local state`
+
+- `Global state`, which will be implemented in `XState`, describes the state of all form fields, it will be available for any application component
+- `Local state` state outside from XState, will be contain in the `DomainForm` component, it will be information about the status of the API request for domain availability and a list of available domains
+
+## Usage
+
+### Deployment
+
+There are several ways to publish an application.
+
+#### Directly in vercel
+
+[https://nextjs.org/docs/deployment#vercel-recommended](https://nextjs.org/docs/deployment#vercel-recommended)
+
+#### Self-hosting with Node.js
+
+[https://nextjs.org/docs/deployment#nodejs-server](https://nextjs.org/docs/deployment#nodejs-server)
+
+#### Static HTML Export
+
+[https://nextjs.org/docs/advanced-features/static-html-export](https://nextjs.org/docs/advanced-features/static-html-export)
+
+### Customizing
+
+For the customer of the application, it means the possibility of customization:
+
+- Site Title
+- Heading
+- Description
+- Logo
+- Styles
+- Favicon
+
+#### Customizing app styles
+
+The user can customize if necessary
+
+- Color scheme
+- Typography
+- Spacing
+- etc [view more in chakra docs](https://chakra-ui.com/docs/theming/theme)
+
+To do this, you need to make changes to the theme.ts file, according to the documentation [https://chakra-ui.com/docs/theming/theme](https://chakra-ui.com/docs/theming/theme)
+
+#### Customizing title and subtitle
+
+The user has the ability to customize the text of the main title and subtitle, for this you need to make the appropriate changes to the file: `public/app-config.json`
+
+```json
+{
+  "title": "Site title",
+  "heading": "App heading",
+  "description": "app subtitle"
+}
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+#### Customizing `logo` and `favicon`
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+In order to use a custom logo or favicon, the user can save it as a file in the `png` format along the paths`public/logo.png` and `public/favicon.png`
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+#### Saving changes
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+The changes you have made need to be added to `git`
 
-## Learn More
+```bash
+git add . && git commit -m "Update app config"
+```
 
-To learn more about Next.js, take a look at the following resources:
+And then push the changes to the repository if needed
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```bash
+git push origin main
+```

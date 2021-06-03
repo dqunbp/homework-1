@@ -1,11 +1,12 @@
 import Head from "next/head";
-
+import Image from "next/image";
 import { createMachine, assign } from "xstate";
 import { useMachine } from "@xstate/react";
 import { Button } from "@chakra-ui/button";
 import { Box, Code, Heading, Stack } from "@chakra-ui/layout";
 
-import config from "../app-config.json";
+import config from "../public/app-config.json";
+// import logo from ""
 
 interface ToggleContext {
   count: number;
@@ -42,26 +43,35 @@ export default function Home() {
       justifyContent="center"
     >
       <Head>
-        <title>{config.title}</title>
+        <title>{config.title || ""}</title>
         <meta
           name="description"
           content="Egghead portfolio state management club homework#1"
         />
         <link rel="icon" href="/favicon.png" />
       </Head>
-      <Stack spacing="8">
-        <Heading as="h1" size="2xl">
-          {config.heading}
-        </Heading>
-        <Heading as="h2" size="lg">
-          {config.description}
-        </Heading>
+      <Stack spacing="12">
+        <Box textAlign="center">
+          {config.heading && (
+            <Heading as="h1" size="2xl">
+              {config.heading}
+            </Heading>
+          )}
+          {config.description && (
+            <Heading as="h2" size="lg" mt="8">
+              {config.description}
+            </Heading>
+          )}
+        </Box>
         <Button onClick={() => send("TOGGLE")}>
           Click me ({active ? "✅" : "❌"})
         </Button>{" "}
         <Code>
           Toggled <strong>{count}</strong> times
         </Code>
+        <Box textAlign="center">
+          <Image src="/logo.png" width={372} height={100} />
+        </Box>
       </Stack>
     </Box>
   );
