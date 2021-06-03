@@ -1,18 +1,24 @@
-import { Box, Stack } from "@chakra-ui/layout";
 import {
+  Input,
+  Box,
+  Stack,
   FormControl,
   FormLabel,
-  FormErrorMessage,
   FormHelperText,
-  Input,
 } from "@chakra-ui/react";
+import { useService } from "@xstate/react";
 import CreatableSelect from "react-select/creatable";
 
+import { stateService } from "../lib/state";
 import keywords from "../public/keywords.json";
 
 const options = keywords.map((keyword) => ({ label: keyword, value: keyword }));
 
 const UserForm: React.FC = () => {
+  const [current, send] = useService(stateService);
+
+  const { user, keywords } = current.context;
+
   const handleChange = (newValue: any, actionMeta: any) => {
     console.group("Value Changed");
     console.log(newValue);
@@ -45,13 +51,6 @@ const UserForm: React.FC = () => {
         <FormHelperText>
           Specify keywords related to your business, you can add your own if
           there are no suitable ones in the list
-        </FormHelperText>
-      </FormControl>
-      <FormControl id="company-name">
-        <FormLabel>Company name</FormLabel>
-        <Input type="text" />
-        <FormHelperText>
-          How would you like to name your company?
         </FormHelperText>
       </FormControl>
     </Stack>

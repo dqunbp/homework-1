@@ -6,16 +6,12 @@ import { Box, Code, Heading, Stack } from "@chakra-ui/layout";
 import { useService } from "@xstate/react";
 
 import config from "../public/app-config.json";
-import { stateService } from "../lib/state";
+
 import UserForm from "../components/user-form";
 import DomainForm from "../components/domain-form";
 import Progress from "../components/progress";
 
 export default function App() {
-  const [current, send] = useService(stateService);
-  const active = current.matches("active");
-  const { count } = current.context;
-
   return (
     <Box
       h="full"
@@ -32,7 +28,7 @@ export default function App() {
         />
         <link rel="icon" href="/favicon.png" />
       </Head>
-      <Stack spacing="12">
+      <Stack spacing="8">
         <Box textAlign="center">
           {config.heading && (
             <Heading as="h1" size="2xl">

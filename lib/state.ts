@@ -1,23 +1,23 @@
 import { createMachine, assign, interpret } from "xstate";
 
 interface State {
-  count: number;
+  user: string;
+  keywords: string[];
+  company: string;
+  domain: string;
 }
 
 const stateMachine = createMachine<State>({
-  id: "toggle",
-  initial: "inactive",
+  id: "form",
+  initial: "formFilling",
   context: {
-    count: 0,
+    user: "",
+    keywords: [],
+    company: "",
+    domain: "",
   },
   states: {
-    inactive: {
-      on: { TOGGLE: "active" },
-    },
-    active: {
-      entry: assign({ count: (ctx) => ctx.count + 1 }),
-      on: { TOGGLE: "inactive" },
-    },
+    formFilling: {},
   },
 });
 
