@@ -70,6 +70,7 @@ First of all, let's describe the stack:
 
 - **XState** - will help to effectively manage the state of the application
 - **ChakraUI** - a set of ui components for React, will allow you to use ready-made components for buttons and form fields
+- **React-select** - to provide multiselect functionality
 - **Next.js** - will allow us to collect our page in statics, which will have a positive effect on the loading time of the application
 - **Typescript** - strong typing will help to minimize the number of possible errors in the development process
 
@@ -91,7 +92,13 @@ State management plays a key role in the operation of our application
 Our application state can be conditionally divided into `global state` and `local state`
 
 - `Global state`, which will be implemented in `XState`, describes the state of all form fields, it will be available for any application component
-- `Local state` state outside from XState, will be contain in the `DomainForm` component, it will be information about the status of the API request for domain availability and a list of available domains
+- `Local state` contains an intermediate state of the interface, for example, such a state can be in the ]]`DomainForm` component that displays information about the status of the API request for domain availability and a list of available domains
+  - Let's dive deeper into this question, the `DomainForm` component can have the following states:
+    - Empty state - when you first open the application, this component is empty
+    - Name availability check - when the user enters the company name, the component sends a request to check the name availability, at this moment the spinner is displayed
+    - Displaying a list of available names - after receiving a response from the server, the component displays a list of available options
+    - Manual name entry - if the user did not find a suitable name among the proposed ones, he can try to enter the desired name manually
+    - Selected domain name - when the user clicks on one of the suggested domain names or enters it manually, it is saved to the global state and displayed as selected
 
 ## Usage
 

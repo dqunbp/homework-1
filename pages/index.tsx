@@ -1,36 +1,18 @@
 import Head from "next/head";
 import Image from "next/image";
-import { createMachine, assign } from "xstate";
-import { useMachine } from "@xstate/react";
 import { Button } from "@chakra-ui/button";
 import { Box, Code, Heading, Stack } from "@chakra-ui/layout";
 
+import { useService } from "@xstate/react";
+
 import config from "../public/app-config.json";
-// import logo from ""
+import { stateService } from "../lib/state";
+import UserForm from "../components/user-form";
+import DomainForm from "../components/domain-form";
+import Progress from "../components/progress";
 
-interface ToggleContext {
-  count: number;
-}
-
-const toggleMachine = createMachine<ToggleContext>({
-  id: "toggle",
-  initial: "inactive",
-  context: {
-    count: 0,
-  },
-  states: {
-    inactive: {
-      on: { TOGGLE: "active" },
-    },
-    active: {
-      entry: assign({ count: (ctx) => ctx.count + 1 }),
-      on: { TOGGLE: "inactive" },
-    },
-  },
-});
-
-export default function Home() {
-  const [current, send] = useMachine(toggleMachine);
+export default function App() {
+  const [current, send] = useService(stateService);
   const active = current.matches("active");
   const { count } = current.context;
 
@@ -58,17 +40,15 @@ export default function Home() {
             </Heading>
           )}
           {config.description && (
-            <Heading as="h2" size="lg" mt="8">
+            <Heading as="p" size="md" mt="8">
               {config.description}
             </Heading>
           )}
         </Box>
-        <Button onClick={() => send("TOGGLE")}>
-          Click me ({active ? "✅" : "❌"})
-        </Button>{" "}
-        <Code>
-          Toggled <strong>{count}</strong> times
-        </Code>
+        <UserForm />
+        <DomainForm />
+        <Progress />
+        <Button size="lg">Submit</Button>
         <Box textAlign="center">
           <Image src="/logo.png" width={372} height={100} />
         </Box>

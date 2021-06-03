@@ -7,7 +7,7 @@ import userTheme from "../theme";
 const globalStyles = {
   styles: {
     global: {
-      "html, body, body > div": {
+      "html, body, body > #__next": {
         width: "100%",
         height: "100%",
       },
