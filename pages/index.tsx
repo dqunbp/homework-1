@@ -5,6 +5,8 @@ import { useMachine } from "@xstate/react";
 import { Button } from "@chakra-ui/button";
 import { Box, Code, Heading, Stack } from "@chakra-ui/layout";
 
+import config from "../app-config.json";
+
 interface ToggleContext {
   count: number;
 }
@@ -33,14 +35,14 @@ export default function Home() {
 
   return (
     <Box
-      h="100vh"
+      h="full"
       w="full"
       display="flex"
       alignItems="center"
       justifyContent="center"
     >
       <Head>
-        <title>Create Next App</title>
+        <title>{config.title}</title>
         <meta
           name="description"
           content="Egghead portfolio state management club homework#1"
@@ -49,10 +51,10 @@ export default function Home() {
       </Head>
       <Stack spacing="8">
         <Heading as="h1" size="2xl">
-          Hello egghead state management club
+          {config.heading}
         </Heading>
-        <Heading as="h2" size="xl">
-          XState React Template
+        <Heading as="h2" size="lg">
+          {config.description}
         </Heading>
         <Button onClick={() => send("TOGGLE")}>
           Click me ({active ? "✅" : "❌"})
