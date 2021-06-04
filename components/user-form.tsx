@@ -15,10 +15,6 @@ import keywords from "../public/keywords.json";
 const options = keywords.map((keyword) => ({ label: keyword, value: keyword }));
 
 const UserForm: React.FC = () => {
-  const [current, send] = useService(stateService);
-
-  const { user, keywords } = current.context;
-
   const handleChange = (newValue: any, actionMeta: any) => {
     console.group("Value Changed");
     console.log(newValue);
