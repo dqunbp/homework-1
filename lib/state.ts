@@ -1,25 +1,39 @@
-import { createMachine, assign, interpret } from "xstate";
+import { createMachine, assign, interpret, MachineConfig } from "xstate";
 
-interface State {
-  user: string;
+interface Context {
+  username: string;
   keywords: string[];
   company: string;
   domain: string;
 }
 
-const stateMachine = createMachine<State>({
+interface Schema {
+  states: {
+    editing: {};
+    submitting: {};
+    success: {};
+  };
+}
+
+type Event = { type: "CHANGE_USERNAME" } | { type: "CHANGE_KEYWORDS" };
+
+const config: MachineConfig<Context, Schema, Event> = {
   id: "form",
-  initial: "formFilling",
+  initial: "editing",
   context: {
-    user: "",
+    username: "",
     keywords: [],
     company: "",
     domain: "",
   },
   states: {
-    formFilling: {},
+    editing: {},
+    submitting: {},
+    success: {},
   },
-});
+};
+
+const stateMachine = createMachine(config);
 
 export const stateService = interpret(stateMachine);
 stateService.start();

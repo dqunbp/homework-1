@@ -13,13 +13,7 @@ import Progress from "../components/progress";
 
 export default function App() {
   return (
-    <Box
-      h="full"
-      w="full"
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
-    >
+    <Box h="full" w="full">
       <Head>
         <title>{config.title || ""}</title>
         <meta
@@ -28,27 +22,31 @@ export default function App() {
         />
         <link rel="icon" href="/favicon.png" />
       </Head>
-      <Stack spacing="8">
-        <Box textAlign="center">
-          {config.heading && (
-            <Heading as="h1" size="2xl">
-              {config.heading}
-            </Heading>
-          )}
-          {config.description && (
-            <Heading as="p" size="md" mt="8">
-              {config.description}
-            </Heading>
-          )}
-        </Box>
-        <UserForm />
-        <DomainForm />
-        <Progress />
-        <Button size="lg">Submit</Button>
-        <Box textAlign="center">
-          <Image src="/logo.png" width={372} height={100} />
-        </Box>
-      </Stack>
+      <Box h="full" mx="auto" px={[5, 8]} maxW={["full", "48rem"]}>
+        <Stack h="full" spacing="8" mt={[8, 16]}>
+          <Box textAlign="center">
+            {config.heading && (
+              <Heading as="h1" size="2xl">
+                {config.heading}
+              </Heading>
+            )}
+            {config.description && (
+              <Heading as="p" size="md" mt="8">
+                {config.description}
+              </Heading>
+            )}
+          </Box>
+          <UserForm />
+          <DomainForm />
+          <Progress />
+          <Button size="lg" flexShrink={0}>
+            Submit
+          </Button>
+          <Box textAlign="center">
+            <Image src="/logo.png" width={372} height={100} />
+          </Box>
+        </Stack>
+      </Box>
     </Box>
   );
 }
