@@ -9,23 +9,33 @@ import {
 import { useService } from "@xstate/react";
 import CreatableSelect from "react-select/creatable";
 
-import { stateService } from "../lib/state";
+import { EventType, stateService, KeywordOptions } from "../lib/state";
 import keywords from "../public/keywords.json";
 
-const options = keywords.map((keyword) => ({ label: keyword, value: keyword }));
+const options: KeywordOptions = keywords.map((keyword) => ({
+  label: keyword,
+  value: keyword,
+}));
 
 const UserForm: React.FC = () => {
+  const [state, send] = useService(stateService);
+
   const handleChange = (newValue: any, actionMeta: any) => {
-    console.group("Value Changed");
     console.log(newValue);
-    console.log(`action: ${actionMeta.action}`);
-    console.groupEnd();
+    console.log(actionMeta);
   };
+
   return (
     <Stack spacing={8}>
       <FormControl id="user-name">
         <FormLabel>Your name</FormLabel>
-        <Input type="text" />
+        <Input
+          type="text"
+          value={state.context.username}
+          onChange={(e) =>
+            send({ type: EventType.CHANGE_USERNAME, value: e.target.value })
+          }
+        />
         <FormHelperText>Please enter your name</FormHelperText>
       </FormControl>
       <FormControl>
@@ -42,7 +52,7 @@ const UserForm: React.FC = () => {
             }),
           }}
           options={options}
-          onChange={handleChange}
+          onChange={(value) => send({ type: EventType.CHANGE_KEYWORDS, value })}
         />
         <FormHelperText>
           Specify keywords related to your business, you can add your own if
